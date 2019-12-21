@@ -2,17 +2,30 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-// 임시로 Unit만듬
-public class Unit
-{
-
-}
-
 public class BattleBoard : MonoBehaviour
 {
     private Dictionary<Vector2Int, Unit> unitGrid = new Dictionary<Vector2Int, Unit>();
 
     const int gridMax = 5; // 5*5 board, 0 ~ 4
+    private Vector2 ldPos;
+    private Vector2 ruPos;
+
+    private void Start()
+    {
+        ResetPos();
+    }
+
+    public void ResetPos()
+    {
+        Vector3 offset = new Vector3(0.5f, 0.5f);
+        ldPos = transform.position - offset;
+        ruPos = transform.position + offset + gridMax * Vector3.one;
+    }
+
+    public bool IsInBoard(Vector2 globalPos)
+    {
+        return (ldPos.x < globalPos.x && ldPos.y < globalPos.y && ruPos.x > globalPos.x && ruPos.y > globalPos.y);
+    }
 
     public bool SetUnit(Vector2Int pos, Unit u)
     {
