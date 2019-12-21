@@ -25,6 +25,7 @@ public abstract class SocketBehavior : MonoBehaviour
 {
     protected Socket mainSocket;
     protected Queue<string> receivedData = new Queue<string>();
+    protected Queue<Action> receivedAction = new Queue<Action>();
 
     private void Update()
     {
@@ -36,6 +37,10 @@ public abstract class SocketBehavior : MonoBehaviour
         {
             // do something with data
             ChatManager.inst.AppendLog(receivedData.Dequeue());
+        }
+        if (receivedAction.Count > 0)
+        {
+            receivedAction.Dequeue()();
         }
     }
 
@@ -58,6 +63,11 @@ public abstract class SocketBehavior : MonoBehaviour
     protected void AppendData(string data)
     {
         receivedData.Enqueue(data);
+    }
+
+    protected void AppendAction(Action action)
+    {
+        receivedAction.Enqueue(action);
     }
 
     protected abstract void DataReceived(IAsyncResult ar);

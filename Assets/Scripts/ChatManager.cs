@@ -54,6 +54,7 @@ public class ChatManager : MonoBehaviour
             Destroy(currentSocketObject);
             currentSocketObject = null;
             AppendLog("Disconnected");
+            ipPortText.text = "Not Connected";
         }
     }
 

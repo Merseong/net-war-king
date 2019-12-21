@@ -9,8 +9,6 @@ using UnityEngine.UI;
 
 public class SocketClient : SocketBehavior
 {
-
-
     public void StartClient(string address, int port)
     {
         try
@@ -26,6 +24,10 @@ public class SocketClient : SocketBehavior
             mainSocket.BeginReceive(ao.Buffer, 0, ao.BufferSize, 0, DataReceived, ao);
 
             AppendData("Client connected to Server");
+            AppendAction(() =>
+            {
+                ChatManager.inst.ipPortText.text = address;
+            });
         }
         catch (Exception e)
         {

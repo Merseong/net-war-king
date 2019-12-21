@@ -1184,7 +1184,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: IP/Port
+  m_Text: Not Connected
 --- !u!222 &982632147
 CanvasRenderer:
   m_ObjectHideFlags: 0

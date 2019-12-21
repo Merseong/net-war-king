@@ -25,6 +25,18 @@ public class SocketServer : SocketBehavior
             mainSocket.BeginAccept(AcceptCallback, null);
 
             AppendData("Server Ready");
+            AppendAction(() => 
+            {
+                IPHostEntry host = Dns.GetHostEntry(Dns.GetHostName());
+                foreach (IPAddress ip in host.AddressList)
+                {
+                    if (ip.AddressFamily == AddressFamily.InterNetwork)
+                    {
+                        ChatManager.inst.ipPortText.text = ip.ToString();
+                        break;
+                    }
+                }
+            });
         }
         catch (Exception e)
         {
