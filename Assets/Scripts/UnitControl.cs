@@ -6,7 +6,7 @@ public class UnitControl : MonoBehaviour
 {
     private bool isDragged = false;
 
-    public BattleBoard b;
+    public BattleBoard board;
 
     private void OnMouseDrag()
     {
@@ -21,14 +21,14 @@ public class UnitControl : MonoBehaviour
         if (isDragged)
         {
             isDragged = false;
-            if (b != null && b.IsInBoard(transform.position))
+            if (board != null && board.IsInBoard(transform.position))
             {
-                var snapPos = b.GetNearGrid(transform.localPosition);
+                var snapPos = board.GetNearGrid(transform.localPosition);
                 transform.localPosition = new Vector3(snapPos.x, snapPos.y);
             }
             else
             {
-                b = null;
+                board = null;
             }
         }
     }

@@ -214,7 +214,7 @@ GameObject:
   - component: {fileID: 283200089}
   - component: {fileID: 283200091}
   m_Layer: 0
-  m_Name: Unit
+  m_Name: Soldier
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -292,9 +292,25 @@ MonoBehaviour:
   m_GameObject: {fileID: 283200086}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 35cb13eff99b4d34f987514011e550d8, type: 3}
+  m_Script: {fileID: 11500000, guid: c1e1233a5812dc548b4597a0d28b304f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  attackPointStat: 5
+  healthPointStat: 5
+  buffAreas:
+  - {x: 1, y: -1}
+  - {x: 1, y: 0}
+  - {x: 1, y: 1}
+  - {x: 0, y: -1}
+  - {x: 0, y: 1}
+  - {x: 1, y: -1}
+  - {x: 1, y: 0}
+  - {x: 1, y: 1}
+  board: {fileID: 847557577}
+  position: {x: 0, y: 0}
+  attackPoint: 0
+  healthPoint: 0
+  stackPoint: 0
 --- !u!114 &283200090
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -307,7 +323,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ccc2119c3b5cafb4b9cba78a68d4a43d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  b: {fileID: 847557577}
+  board: {fileID: 847557577}
 --- !u!65 &283200091
 BoxCollider:
   m_ObjectHideFlags: 0
