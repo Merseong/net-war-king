@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BattleBoard : MonoBehaviour
+public class UnitBoard : MonoBehaviour
 {
     private Dictionary<Vector2Int, Unit> unitGrid = new Dictionary<Vector2Int, Unit>();
 

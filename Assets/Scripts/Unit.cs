@@ -11,7 +11,7 @@ public abstract class Unit : MonoBehaviour
     public List<Vector2Int> buffAreas;
 
     [Header("Unit Current Status")]
-    public BattleBoard board;
+    public UnitBoard board;
     public Vector2Int position;
     public int attackPoint;
     public int healthPoint;

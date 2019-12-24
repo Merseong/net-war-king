@@ -911,7 +911,7 @@ GameObject:
   - component: {fileID: 847557576}
   - component: {fileID: 847557577}
   m_Layer: 0
-  m_Name: BattleBoard
+  m_Name: UnitBoard
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

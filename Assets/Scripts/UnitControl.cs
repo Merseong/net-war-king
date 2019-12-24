@@ -6,7 +6,7 @@ public class UnitControl : MonoBehaviour
 {
     private bool isDragged = false;
 
-    public BattleBoard board;
+    public UnitBoard board;
     private Unit u;
 
     private void Start()
