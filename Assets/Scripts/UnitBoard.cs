@@ -6,9 +6,12 @@ public class UnitBoard : MonoBehaviour
 {
     private Dictionary<Vector2Int, Unit> unitGrid = new Dictionary<Vector2Int, Unit>();
 
-    const int gridMax = 5; // 5*5 board, 0 ~ 4
+    public const int gridMax = 5; // 5*5 board, 0 ~ 4
     private Vector2 ldPos;
     private Vector2 ruPos;
+
+    public int unitCount = 0;
+    public bool isAttacker = false;
 
     private void Start()
     {
@@ -33,6 +36,7 @@ public class UnitBoard : MonoBehaviour
             return false;
 
         unitGrid[pos] = u;
+        unitCount++;
         return true;
     }
 
@@ -42,6 +46,7 @@ public class UnitBoard : MonoBehaviour
             return false;
 
         unitGrid.Remove(pos);
+        unitCount--;
         return true;
     }
 
@@ -56,6 +61,11 @@ public class UnitBoard : MonoBehaviour
             return unitGrid[pos];
         else
             return null;
+    }
+    
+    public List<Unit> GetUnitList()
+    {
+        return new List<Unit>(unitGrid.Values);
     }
 
     public Vector2Int GetNearGrid(Vector2 pos)

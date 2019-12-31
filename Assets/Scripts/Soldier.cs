@@ -28,14 +28,25 @@ public class Soldier : Unit
         }
     }
 
-    protected override Queue<Unit> GetAttackTargets()
+    protected override Queue<Unit> GetAttackTargets(UnitBoard b)
     {
         Queue<Unit> targets = new Queue<Unit>();
         // 임시
-        if (board.CheckUnit(board.GetOppositeGrid(position)))
+        for (int i = 0; i < UnitBoard.gridMax; ++i)
         {
-            targets.Enqueue(board.GetUnit(board.GetOppositeGrid(position)));
+            bool isDone = false;
+            for (int j = UnitBoard.gridMax - 1; j > -1; --j)
+            {
+                if (b.CheckUnit(new Vector2Int(UnitBoard.gridMax - i - 1, j)))
+                {
+                    targets.Enqueue(b.GetUnit(new Vector2Int(UnitBoard.gridMax - i - 1, j)));
+                    isDone = true;
+                    break;
+                }
+            }
+            if (isDone) break;
         }
+        
         return targets;
     }
 }

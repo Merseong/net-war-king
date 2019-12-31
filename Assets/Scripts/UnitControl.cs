@@ -15,6 +15,7 @@ public class UnitControl : MonoBehaviour
         var snapPos = board.GetNearGrid(transform.localPosition);
         transform.localPosition = new Vector3(snapPos.x, snapPos.y);
         u.position = snapPos;
+        board.SetUnit(snapPos, u);
     }
 
     private void OnMouseDrag()

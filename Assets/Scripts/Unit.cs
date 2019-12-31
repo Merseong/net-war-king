@@ -34,13 +34,13 @@ public abstract class Unit : MonoBehaviour
         AfterDamaged = new Action(() => { });
     }
 
-    private void ResetStatus()
+    public void ResetStatus()
     {
         attackPoint = attackPointStat;
         healthPoint = healthPointStat;
     }
 
-    protected abstract Queue<Unit> GetAttackTargets();
+    protected abstract Queue<Unit> GetAttackTargets(UnitBoard b);
     protected Queue<Unit> GetBuffTargets()
     {
         Queue<Unit> units = new Queue<Unit>();
@@ -53,9 +53,9 @@ public abstract class Unit : MonoBehaviour
         }
         return units;
     }
-    public virtual void AttackAction()
+    public virtual void AttackAction(UnitBoard enemyBoard)
     {
-        Queue<Unit> targets = GetAttackTargets();
+        Queue<Unit> targets = GetAttackTargets(enemyBoard);
         BeforeAttack();
         while (targets.Count > 0)
         {
@@ -78,6 +78,9 @@ public abstract class Unit : MonoBehaviour
         BeforeDead();
         stackPoint--;
         if (stackPoint < 0)
+        {
+            board.ResetUnit(position);
             Destroy(gameObject);
+        }
     }
 }
