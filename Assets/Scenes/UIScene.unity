@@ -150,6 +150,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25074f97fe5a9d94d9c3a94df23490f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  useMouseOffset: 0
   xSize: 1.03
   ySize: 1.47
   fileName: 
@@ -248,6 +249,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce047056c63bc804681ec91dd68cdeed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  useMouseOffset: 1
   xSize: 17.78
   ySize: 10
   matchObject: {fileID: 0}
