@@ -2,15 +2,24 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Window : MonoDragableObject
+public interface IStoreable
 {
-    public Dictionary<Vector2Int, FileSystemBase> fileGrid = new Dictionary<Vector2Int, FileSystemBase>();
+    List<FileSystemBase> GetFiles();
+    bool AddToGrid(FileSystemBase file);
+}
 
-    [Header("Folder Window Basics")]
+public interface IInteractive
+{
+
+}
+
+public abstract class Window : MonoDragableObject
+{
+    [Header("Window Basics")]
     public FileSystemBase matchObject;
     public Vector2 windowOffset;
 
-    public bool CheckDraggablePosition(Vector2 pos)
+    public virtual bool CheckDraggablePosition(Vector2 pos)
     {
         if (CheckInside(pos) && pos.y > ruPos.y - windowOffset.y)
             return true;
@@ -23,7 +32,7 @@ public class Window : MonoDragableObject
     {
         base.OnDrawGizmosSelected();
         Gizmos.color = Color.green;
-        Gizmos.DrawWireCube(transform.position, new Vector3(xSize - 2 * windowOffset.x, ySize - 2 * windowOffset.y, 1));
+        Gizmos.DrawWireCube(transform.position, new Vector3(size.x - 2 * windowOffset.x, size.y - 2 * windowOffset.y, 1));
     }
     #endregion
 }

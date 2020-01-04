@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,15 +7,14 @@ public class MonoDragableObject : MonoBehaviour
 {
     [Header("Dragable Object Base")]
     public bool useMouseOffset;
-    public float xSize;
-    public float ySize;
+    public Vector2 size;
     public Vector2 ldPos
     { // left down world position of icon
         get
         {
             Vector2 ld = new Vector2();
-            ld.x = transform.position.x - xSize / 2;
-            ld.y = transform.position.y - ySize / 2;
+            ld.x = transform.position.x - size.x / 2;
+            ld.y = transform.position.y - size.y / 2;
             return ld;
         }
     }
@@ -23,8 +23,8 @@ public class MonoDragableObject : MonoBehaviour
         get
         {
             Vector2 ru = new Vector2();
-            ru.x = transform.position.x + xSize / 2;
-            ru.y = transform.position.y + ySize / 2;
+            ru.x = transform.position.x + size.x / 2;
+            ru.y = transform.position.y + size.y / 2;
             return ru;
         }
     }
@@ -60,11 +60,20 @@ public class MonoDragableObject : MonoBehaviour
             return false;
     }
 
+    public bool CheckInside(Vector2 pos, Vector2 ld, Vector2 ru)
+    {
+        if (ld.x < pos.x && ld.y < pos.y &&
+            pos.x < ru.x && pos.y < ru.y)
+            return true;
+        else
+            return false;
+    }
+
     #region Gizmos
     protected virtual void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.yellow;
-        Gizmos.DrawWireCube(transform.position, new Vector3(xSize, ySize, 1));
+        Gizmos.DrawWireCube(transform.position, new Vector3(size.x, size.y, 1));
     }
     #endregion
 }

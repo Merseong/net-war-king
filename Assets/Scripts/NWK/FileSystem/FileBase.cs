@@ -7,8 +7,7 @@ public class FileBase : FileSystemBase
     private void Start()
     {
         // for test
-        fileWindow.fileGrid.Add(filePosition, this);
-        transform.parent = fileWindow.transform;
+        (fileWindow as FolderWindow).AddToGrid(this as FileSystemBase);
         fileWindow = null;
     }
 }

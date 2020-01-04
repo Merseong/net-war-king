@@ -52,9 +52,9 @@ public class FileSystemManager : MonoBehaviour
                     {
                         dragging = windowStack[i] as MonoDragableObject;
                     }
-                    else
+                    else if (windowStack[i] is IStoreable stored)
                     {
-                        foreach (FileSystemBase f in windowStack[i].fileGrid.Values)
+                        foreach (FileSystemBase f in stored.GetFiles())
                         {
                             if (f.CheckInside(mousePoint))
                             {
