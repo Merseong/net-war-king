@@ -13,7 +13,7 @@ public class FileSystemManager : MonoBehaviour
         DontDestroyOnLoad(this);
     }
 
-    public List<Window> windowStack = new List<Window>();
+    public List<Window> windowStack = new List<Window>(); // 0이 가장 위에있는것.
 
     private MonoDragableObject dragging = null;
     private bool isPressed = false;
@@ -34,7 +34,7 @@ public class FileSystemManager : MonoBehaviour
 
     private void OnMouseDrag()
     {
-        Debug.Log("Drag Start, dragging = " + dragging);
+        //Debug.Log("Drag Start, dragging = " + dragging);
         if (dragging != null)
         {
             dragging.OnMouseDrag();
@@ -44,7 +44,7 @@ public class FileSystemManager : MonoBehaviour
             Vector3 mousePoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             initPressedPos = mousePoint;
             initPressedPos.z = 1;
-            for (int i = windowStack.Count - 1; i > -1; --i)
+            for (int i = 0; i < windowStack.Count; ++i)
             {
                 if (windowStack[i].CheckInside(mousePoint))
                 {
@@ -90,8 +90,37 @@ public class FileSystemManager : MonoBehaviour
         }
         if (dragging != null)
         {
-            dragging.OnMouseUp();
+            Window interactWindow = null;
+            Vector3 mousePoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            initPressedPos = mousePoint;
+            initPressedPos.z = 1;
+            for (int i = 0; i < windowStack.Count; ++i)
+            {
+                if (windowStack[i].CheckInside(mousePoint))
+                {
+                    interactWindow = windowStack[i];
+                    break;
+                }
+            }
+            dragging.OnMouseUp(interactWindow);
             dragging = null;
         }
+    }
+
+    public void AddWindowOnTop(Window w)
+    {
+
+    }
+
+    private void WindowToTop(Window w)
+    {
+        if (!windowStack.Contains(w))
+        {
+            Debug.LogError("No such window " + w);
+            return;
+        }
+
+        windowStack.Remove(w);
+        windowStack.Insert(0, w);
     }
 }

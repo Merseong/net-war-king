@@ -6,6 +6,7 @@ public interface IStoreable
 {
     List<FileSystemBase> GetFiles();
     bool AddToGrid(FileSystemBase file);
+    bool RemoveFromGrid(FileSystemBase file);
 }
 
 public interface IInteractive
@@ -25,6 +26,11 @@ public abstract class Window : MonoDragableObject
             return true;
         else
             return false;
+    }
+
+    public virtual bool Interact(FileSystemBase f)
+    {
+        return false;
     }
 
     #region Gizmos

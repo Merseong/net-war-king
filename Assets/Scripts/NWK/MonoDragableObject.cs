@@ -47,7 +47,7 @@ public class MonoDragableObject : MonoBehaviour
         }
         transform.position = mousePoint;
     }
-    public virtual void OnMouseUp()
+    public virtual void OnMouseUp(Window w)
     {
         isOffsetReady = false;
     }

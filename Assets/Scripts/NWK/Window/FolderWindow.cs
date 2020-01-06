@@ -61,6 +61,13 @@ public class FolderWindow : Window, IStoreable
         return output;
     }
 
+    #region WindowOverride
+    public override bool Interact(FileSystemBase f)
+    {
+        return AddToGrid(f);
+    }
+    #endregion
+
     #region IStoreable
     public List<FileSystemBase> GetFiles()
     {
@@ -80,8 +87,22 @@ public class FolderWindow : Window, IStoreable
         file.transform.parent = transform;
         file.transform.position = GridToCenterPos(grid, file.size);
         file.filePosition = grid;
+        file.fileParentWindow = this;
         fileGrid.Add(grid, file);
 
+        return true;
+    }
+    public bool RemoveFromGrid(FileSystemBase file)
+    {
+        if (!fileGrid.ContainsKey(file.filePosition))
+        {
+            Debug.LogError("No file(" + file + ") in grid " + this);
+            return false;
+        }
+
+        fileGrid.Remove(file.filePosition);
+        file.transform.parent = null;
+        file.fileParentWindow = null;
         return true;
     }
     #endregion
