@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -23,6 +24,9 @@ public class ChatManager : MonoBehaviour
 
     private GameObject currentSocketObject;
     private SocketBehavior currentSocketBehavior;
+
+    public delegate void StringDelegate(string str);
+    public StringDelegate OnReceived = new StringDelegate((str) => { });
 
     public void ServerAction()
     {
@@ -61,5 +65,37 @@ public class ChatManager : MonoBehaviour
     public void AppendLog(string str)
     {
         logText.text += "\n" + str;
+    }
+
+    public void SendData(string str)
+    {
+        if (currentSocketBehavior != null)
+        {
+            currentSocketBehavior.SendData(str);
+        }
+        else
+        {
+            Debug.LogError("Server not connected");
+        }
+    }
+
+    public void AddOnReceived(string tag, Action action)
+    {
+        OnReceived += (str) =>
+        {
+            if (str == tag)
+            {
+                action();
+            }
+        };
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Return))
+        {
+            SendData(inputFieldText.text);
+            inputFieldText.text = "";
+        }
     }
 }

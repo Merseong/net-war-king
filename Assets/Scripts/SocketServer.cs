@@ -11,6 +11,17 @@ public class SocketServer : SocketBehavior
 {
     private List<Socket> connectedClients = new List<Socket>();
 
+    public override void CloseSocket()
+    {
+        while (connectedClients.Count > 0)
+        {
+            connectedClients[0].Shutdown(SocketShutdown.Both);
+            connectedClients[0].Close();
+            connectedClients.RemoveAt(0);
+        }
+        base.CloseSocket();
+    }
+
     public void StartServer(int port)
     {
         try
@@ -74,7 +85,10 @@ public class SocketServer : SocketBehavior
         string text = Encoding.UTF8.GetString(obj.Buffer);
         string[] tokens = text.Split('\x01');
         if (text.Length > 0)
+        {
             AppendData(tokens[0] + ": " + tokens[1].TrimEnd(text[text.Length - 1]));
+            ChatManager.inst.OnReceived(tokens[1]);
+        }
 
         for (int i = connectedClients.Count - 1; i >= 0; i--)
         {
@@ -86,6 +100,7 @@ public class SocketServer : SocketBehavior
                 {
                     try { socket.Dispose(); } catch { }
                     connectedClients.RemoveAt(i);
+                    AppendData("Client " + i + " disconnected");
                 }
             }
         }
@@ -95,7 +110,7 @@ public class SocketServer : SocketBehavior
         obj.WorkingSocket.BeginReceive(obj.Buffer, 0, 4096, 0, DataReceived, obj);
     }
 
-    protected override void SendData()
+    public override void SendData(string str)
     {
         if (!mainSocket.IsBound)
         {
@@ -103,8 +118,7 @@ public class SocketServer : SocketBehavior
             return;
         }
 
-        string text = ChatManager.inst.inputFieldText.text.Trim();
-        ChatManager.inst.inputFieldText.text = "";
+        string text = str.Trim();
 
         IPEndPoint ip = (IPEndPoint)mainSocket.LocalEndPoint;
         string addr = ip.Address.ToString();

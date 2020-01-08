@@ -29,10 +29,6 @@ public abstract class SocketBehavior : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Return))
-        {
-            SendData();
-        }
         if (receivedData.Count > 0)
         {
             // do something with data
@@ -44,11 +40,16 @@ public abstract class SocketBehavior : MonoBehaviour
         }
     }
 
-    public void CloseSocket()
+    public virtual void CloseSocket()
     {
         try
         {
-            mainSocket.Disconnect(false);
+            //Debug.Log(mainSocket.Connected + " " + mainSocket.IsBound);
+            if (mainSocket.Connected)
+            {
+                mainSocket.Shutdown(SocketShutdown.Both);
+            }
+            //mainSocket.Disconnect(false);
         }
         catch (Exception e)
         {
@@ -71,5 +72,5 @@ public abstract class SocketBehavior : MonoBehaviour
     }
 
     protected abstract void DataReceived(IAsyncResult ar);
-    protected abstract void SendData();
+    public abstract void SendData(string str);
 }

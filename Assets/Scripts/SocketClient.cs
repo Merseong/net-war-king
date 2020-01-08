@@ -36,7 +36,7 @@ public class SocketClient : SocketBehavior
         }
     }
 
-    protected override void SendData()
+    public override void SendData(string str)
     {
         if (!mainSocket.IsBound)
         {
@@ -44,15 +44,20 @@ public class SocketClient : SocketBehavior
             return;
         }
 
-        string text = ChatManager.inst.inputFieldText.text.Trim();
-        ChatManager.inst.inputFieldText.text = "";
+        string text = str.Trim();
 
         IPEndPoint ip = (IPEndPoint)mainSocket.LocalEndPoint;
         string addr = ip.Address.ToString();
 
         byte[] bDts = Encoding.UTF8.GetBytes(addr + '\x01' + text);
 
-        mainSocket.Send(bDts);
+        try { mainSocket.Send(bDts); }
+        catch
+        {
+            AppendData("Server Disconnected");
+            try { mainSocket.Dispose(); } catch { }
+            ChatManager.inst.DisconnectAction();
+        }
 
         AppendData("You: " + text);
     }
@@ -71,7 +76,10 @@ public class SocketClient : SocketBehavior
         string text = Encoding.UTF8.GetString(obj.Buffer);
         string[] tokens = text.Split('\x01');
         if (text.Length > 0)
+        {
             AppendData(tokens[0] + ": " + tokens[1].TrimEnd(text[text.Length - 1]));
+            ChatManager.inst.OnReceived(tokens[1]);
+        }
 
         obj.ClearBuffer();
 
