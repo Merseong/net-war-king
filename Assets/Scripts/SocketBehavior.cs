@@ -66,7 +66,7 @@ public abstract class SocketBehavior : MonoBehaviour
         receivedData.Enqueue(data);
     }
 
-    protected void AppendAction(Action action)
+    public void AppendAction(Action action)
     {
         receivedAction.Enqueue(action);
     }

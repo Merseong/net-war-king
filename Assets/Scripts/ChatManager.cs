@@ -85,7 +85,7 @@ public class ChatManager : MonoBehaviour
         {
             if (str == tag)
             {
-                action();
+                currentSocketBehavior.AppendAction(action);
             }
         };
     }
