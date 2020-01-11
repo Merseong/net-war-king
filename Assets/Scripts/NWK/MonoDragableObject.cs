@@ -35,7 +35,7 @@ public class MonoDragableObject : MonoBehaviour
     public virtual void OnMouseDrag()
     {
         Vector3 mousePoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        mousePoint.z = 0;
+        mousePoint.z = -99;
         if (useMouseOffset)
         {
             if (!isOffsetReady)

@@ -52,12 +52,13 @@ public class FolderWindow : Window, IStoreable
     }
 
     // 나중에 파일들은 다 크기를 고정해야할듯
-    public Vector2 GridToCenterPos(Vector2Int grid, Vector2 size)
+    public Vector3 GridToCenterPos(Vector2Int grid, Vector2 size)
     {
         Vector2 offsets = size + fileOffset;
-        Vector2 output = windowLu;
+        Vector3 output = windowLu;
         output.x += offsets.x / 2 + offsets.x * grid.x;
         output.y -= offsets.y / 2 + offsets.y * grid.y;
+        output.z = transform.position.z - 0.5f;
         return output;
     }
 
